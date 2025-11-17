@@ -2,7 +2,7 @@ CC=arm-none-eabi-gcc
 STD=-std=gnu11
 WFLAGS=-Wall
 INC=-I./Include
-FLAGS=$(STD) $(WFLAGS) $(INC)
+FLAGS=$(STD) $(WFLAGS) $(INC) -O0 -mcpu=cortex-m4
 
 SRC= gpio_driver.c syscfg_driver.c nvic_driver.c
 OBJ= gpio_driver.o syscfg_driver.o nvic_driver.o

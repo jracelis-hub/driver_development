@@ -18,28 +18,12 @@
 ****************************************************************************************************/
 
 /***************************************************************************************************
-* Type:     NVIC Interrupt Set Enable Registers
-* Location: Cortex M4 Generic Manual on page 4-4 for memory mapped addresses of NVIC_ISERx
-* Details:  Use to set interrupt request numbers based on IRQn vector table. 0 - 81 for Cortex M4
+* Type:     NVIC Memory Map Register
+* Section:  4.2 Nested Vectored Interrupt Controller
+* Location: Cortex M4 Generic Manual on page 4-3 for memory mapped addresses of NVIC
 ****************************************************************************************************/
 
-#define NVIC_ISER_BASE_ADDRESS      (0xE000E100UL)
-
-/***************************************************************************************************
-* Type:     NVIC Interrupt Clear Enable Registers 
-* Location: Cortex M4 Generic Manual on page 4-5 for memory mapped addresses of NVIC_ISERx
-* Details:  Use to clear interrupt request numbers based on IRQn vector table. 0 - 81 for Cortex M4
-****************************************************************************************************/
-
-#define NVIC_ICER_BASE_ADDRESS      (0xE000E180UL)
-
-/***************************************************************************************************
-* Type:     NVIC Interrupt Priority Registers
-* Location: Cortex M4 Generic Manual on page 4-7 for memory mapped addresses of NVIC_IPRx
-* Details:  Use to to set priority of IRQn
-****************************************************************************************************/
-
-#define NVIC_IPR_BASE_ADDRESS       (0xE000E400UL)
+#define NVIC_BASE_ADDRESS           (0xE000E100UL)
 
 /***************************************************************************************************
 *
@@ -104,43 +88,26 @@
 ****************************************************************************************************/
 
 /****************************************************************************************************
-* Type:     Nested Vectored Interrupt Control Interrupt Set Enable Register
-* Section:  4.2.2 Interrupt Set-Enable Register
-* Location: Cortex M4 Generic User Guide on page 4-4    
+* Type:     Nested Vectored Interrupt Control Memory Map
+* Section:  4.2 Nested Vectored Interrupt Controller 
+* Location: Cortex M4 Generic User Guide on page 4-3    
 ****************************************************************************************************/
-
 typedef struct
 {
-    volatile uint32_t iser[8];           /* Interrupt Set Enable Register             - Offset 0x00 - 0x1C */
-} nvic_iser_register_t;
+    volatile uint32_t iser[8];           /* Interrupt Set Enable Register             - Offset 0x100 - 0x11C */
+    volatile uint32_t reserve_1[24];     /* Reserve 1                                 - Offset 0x120 - 0x17C */
+    volatile uint32_t icer[8];           /* Interrupt Clear Enable Register           - Offset 0x180 - 0x19C */
+    volatile uint32_t reserve_2[24];     /* Reserve 2                                 - Offset 0x1A0 - 0x1FC */
+    volatile uint32_t ispr[8];           /* Interrupt Set-pending Register            - Offset 0x200 - 0x21C */
+    volatile uint32_t reserve_3[24];     /* Reserve 3                                 - Offset 0x220 - 0x27C */
+    volatile uint32_t icpr[8];           /* Interrupt Clear-pending Register          - Offset 0x280 - 0x29C */
+    volatile uint32_t reserve_4[24];     /* Reserve 4                                 - Offset 0x2A0 - 0x2FC */
+    volatile uint32_t iabr[8];           /* Interrupt Clear-pending Register          - Offset 0x300 - 0x31C */
+    volatile uint32_t reserve_5[36];     /* Reserve 5                                 - Offset 0x320 - 0x3FC */
+    volatile uint32_t ipr[60];           /* Interrupt Priority Register               - Offset 0x400 - 0x4EF */
+} nvic_registers_t;
 
-#define nvic_iser                   ((nvic_iser_registers_t *)(NVIC_ISER_BASE_ADDRESS))
-
-/****************************************************************************************************
-* Type:     Nested Vectored Interrupt Control Interrupt Clear Enable Register
-* Section:  4.2.3 Interrupt Set-Enable Register
-* Location: Cortex M4 Generic User Guide on page 4-5    
-****************************************************************************************************/
-
-typedef struct
-{
-    volatile uint32_t icer[8];           /* Interrupt Clear Enable Register           - Offset 0x80 - 0x9C */
-} nvic_icer_register_t;
-
-#define nvic_icer                   ((nvic_icer_registers_t *)(NVIC_ICER_BASE_ADDRESS))
-
-/****************************************************************************************************
-* Type:     Nested Vectored Interrupt Control Interrupt Clear Enable Register
-* Section:  4.2.3 Interrupt Set-Enable Register
-* Location: Cortex M4 Generic User Guide on page 4-5    
-****************************************************************************************************/
-
-typedef struct
-{
-    volatile uint32_t ipr[60];           /* Interrupt Priority Register               - Offset 0x00 - 0xEF */
-} nvic_ipr_register_t;
-
-#define nvic_ipr                    ((nvic_ipr_registers_t *)(NVIC_IPR_BASE_ADDRESS))
+#define nvic                        ((nvic_registers_t *)NVIC_BASE_ADDRESS)
 
 /****************************************************************************************************
 *
