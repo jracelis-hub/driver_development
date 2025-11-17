@@ -14,3 +14,16 @@ Hardware
 - Micro USB B Cable
 - Logic Analyzer (24 MHz)
 - Digital Multimeter
+
+## Files
+
+Header Files
+- `memory_map_driver.h` - holds the stm32407 memory mapped core and peripheral registers
+- `gpio_driver.h` - used to configure gpios and holds structures of gpios
+- `nvic_driver.h` - used to configure nvic interrupts and specific functions
+- `syscfg_driver.h` - used to configure exti (extended interrupts) for gpios
+
+Source Files
+- `gpio_driver.c` - source code of gpios
+- `nvic_driver.c` - source code of nvic
+- `syscfg_driver.c` - source code of syscfg
